@@ -150,6 +150,16 @@ input[type=checkbox]{
 .option-copy strong{display:block}
 .option-copy small{color:var(--muted)}
 
+.subsection-label{
+  margin:18px -18px 4px;
+  padding:9px 18px;
+  background:#f3f4f6;
+  color:#4b5563;
+  font-size:.82rem;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+.subsection-label:first-of-type{margin-top:4px}
 .furniture-row{align-items:flex-start}
 .room-gap{height:22px;border-top:1px solid #eef0f2}
 .furniture-main{flex:1;min-width:0}
@@ -315,28 +325,19 @@ input[type=checkbox]{
         <strong id="furniturePurchaseTotal">R$ 0,00</strong>
       </div>
 
-      <!-- Sala -->
+      <div class="subsection-label">Sala/Quarto</div>
+
       <div class="furniture-row">
         <input class="furniture-check" type="checkbox" id="sofa">
         <div class="furniture-main"><strong>Sofá 2–3 lugares</strong>
-          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="sofa" type="number" min="0" step="10" value="2000"></div>
+          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="sofa" type="number" min="0" step="10" value="3000"></div>
         </div>
       </div>
 
-      <div class="furniture-row">
-        <input class="furniture-check" type="checkbox" id="escrivaninha">
-        <div class="furniture-main"><strong>Escrivaninha</strong>
-          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="escrivaninha" type="number" min="0" step="10" value="300"></div>
-        </div>
-      </div>
-
-      <div class="room-gap" aria-hidden="true"></div>
-
-      <!-- Quarto -->
       <div class="furniture-row">
         <input class="furniture-check" type="checkbox" id="cama">
         <div class="furniture-main"><strong>Cama + colchão de casal</strong>
-          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="cama" type="number" min="0" step="10" value="1000"></div>
+          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="cama" type="number" min="0" step="10" value="1500"></div>
         </div>
       </div>
 
@@ -347,9 +348,15 @@ input[type=checkbox]{
         </div>
       </div>
 
-      <div class="room-gap" aria-hidden="true"></div>
+      <div class="furniture-row">
+        <input class="furniture-check" type="checkbox" id="escrivaninha">
+        <div class="furniture-main"><strong>Escrivaninha</strong>
+          <div class="mini-money"><span>R$</span><input class="furniture-price" data-for="escrivaninha" type="number" min="0" step="10" value="300"></div>
+        </div>
+      </div>
 
-      <!-- Cozinha -->
+      <div class="subsection-label">Cozinha/Banheiro/Área de Serviço</div>
+
       <div class="furniture-row">
         <input class="furniture-check" type="checkbox" id="geladeira">
         <div class="furniture-main"><strong>Geladeira</strong>
@@ -371,9 +378,6 @@ input[type=checkbox]{
         </div>
       </div>
 
-      <div class="room-gap" aria-hidden="true"></div>
-
-      <!-- Área de serviço -->
       <div class="furniture-row">
         <input class="furniture-check" type="checkbox" id="lavaSeca">
         <div class="furniture-main"><strong>Máquina lava e seca</strong>
@@ -381,7 +385,6 @@ input[type=checkbox]{
         </div>
       </div>
 
-      
       <div class="months">
         <label for="months">Diluir mobília em</label>
         <input id="months" type="number" min="1" max="120" step="1" value="36">
@@ -415,9 +418,9 @@ const furniturePurchaseTotal=document.getElementById('furniturePurchaseTotal');
 
 const furnitureNames={
   sofa:'Sofá 2–3 lugares',
-  escrivaninha:'Escrivaninha',
   cama:'Cama + colchão de casal',
   armarioCasal:'Armário de casal',
+  escrivaninha:'Escrivaninha',
   geladeira:'Geladeira',
   fogao:'Fogão',
   armarioCozinha:'Armário cozinha',
