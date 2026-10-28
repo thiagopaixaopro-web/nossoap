@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculadora de Apartamento</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#17191d;--muted:#6b7280;--border:#dfe3e8;--accent:#5b3cc4;--accent-soft:#f0ecff;--shadow:0 10px 30px rgba(0,0,0,.06);--radius:18px}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+.wrap{width:min(920px,calc(100% - 28px));margin:28px auto 48px}h1{font-size:clamp(1.7rem,5vw,2.5rem);margin:0 0 8px}.subtitle{margin:0 0 24px;color:var(--muted);line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr;gap:18px}@media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.card h2{margin:0 0 16px;font-size:1.12rem}
+label{display:block;font-weight:600;margin-bottom:7px}input[type=number]{width:100%;border:1px solid var(--border);border-radius:12px;padding:13px 14px;font-size:1rem;outline:none;background:#fff}
+input[type=number]:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.money-input{display:grid;grid-template-columns:48px 1fr;align-items:center;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}.money-input span{text-align:center;color:var(--muted);font-weight:700;border-right:1px solid var(--border);padding:13px 0;background:#fafafa}.money-input input{border:0;border-radius:0;padding:13px}
+.check-row,.furniture-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eef0f2}.check-row:last-child,.furniture-row:last-child{border-bottom:0}.check-row input[type=checkbox],.furniture-row input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto}
+.check-copy{flex:1}.check-copy strong{display:block}.check-copy small{color:var(--muted)}
+.furniture-row{align-items:flex-start}.furniture-main{flex:1;min-width:0}.furniture-main strong{display:block;margin-bottom:8px}.mini-money{display:grid;grid-template-columns:36px 1fr;border:1px solid var(--border);border-radius:10px;overflow:hidden;max-width:220px}.mini-money span{display:grid;place-items:center;color:var(--muted);background:#fafafa;border-right:1px solid var(--border);font-size:.9rem;font-weight:700}.mini-money input{border:0;border-radius:0;padding:9px 10px;font-size:.95rem}
+.months{margin-top:12px;display:grid;grid-template-columns:1fr 120px;align-items:center;gap:14px}.months label{margin:0;font-weight:600}
+.summary{background:#17191d;color:#fff;border:0}.summary h2{margin-bottom:6px}.summary .hint{color:#b8bec8;font-size:.9rem;margin-bottom:18px}.total{font-size:clamp(2rem,7vw,3.3rem);font-weight:800;margin:8px 0 20px;letter-spacing:-.03em}
+.breakdown{border-top:1px solid rgba(255,255,255,.14);padding-top:10px}.breakdown-row{display:flex;justify-content:space-between;gap:18px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.09)}.breakdown-row span:first-child{color:#d6dae0}.breakdown-row strong{white-space:nowrap}.breakdown-row.furniture-detail{padding-left:14px;font-size:.92rem}.breakdown-row.furniture-detail span:first-child{color:#aeb5bf}
+.furniture-total{margin-top:16px;padding:13px 14px;border-radius:12px;background:rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:12px}.empty{color:#aeb5bf;font-size:.92rem;padding:8px 0}.footnote{color:var(--muted);font-size:.85rem;line-height:1.5;margin-top:18px}.pill{display:inline-flex;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:.8rem;font-weight:700;margin-bottom:10px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="pill">Uso pessoal</div>
+<h1>Calculadora de Apartamento</h1>
+<p class="subtitle">Compare o custo real mensal de cada imóvel incluindo seguro fiança, transporte e mobília.</p>
+
+<div class="grid two">
+<section class="card">
+<h2>1. Moradia</h2>
+<label for="rent">Valor total do imóvel</label>
+<div class="money-input"><span>R$</span><input id="rent" type="number" min="0" step="10" value="1800" inputmode="decimal"></div>
+
+<div style="height:14px"></div>
+<div class="check-row"><input id="insurance" type="checkbox"><div class="check-copy"><strong>Seguro fiança</strong><small>Adiciona 11% do valor total do imóvel</small></div></div>
+<div class="check-row"><input id="vlt" type="checkbox"><div class="check-copy"><strong>Precisa de VLT</strong><small>Adiciona R$ 220/mês</small></div></div>
+<div class="check-row"><input id="uber" type="checkbox"><div class="check-copy"><strong>Precisa de Uber</strong><small>Adiciona R$ 700/mês</small></div></div>
+</section>
+
+<section class="card">
+<h2>2. Mobília</h2>
+
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="geladeira"><div class="furniture-main"><strong>Geladeira</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="geladeira" type="number" min="0" step="10" value="1000"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="fogao"><div class="furniture-main"><strong>Fogão</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="fogao" type="number" min="0" step="10" value="600"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="cama"><div class="furniture-main"><strong>Cama + colchão de casal</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="cama" type="number" min="0" step="10" value="1000"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="sofa"><div class="furniture-main"><strong>Sofá 2–3 lugares</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="sofa" type="number" min="0" step="10" value="2000"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="escrivaninha"><div class="furniture-main"><strong>Escrivaninha</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="escrivaninha" type="number" min="0" step="10" value="300"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="lavaSeca"><div class="furniture-main"><strong>Máquina lava e seca</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="lavaSeca" type="number" min="0" step="10" value="1400"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="armarioDormitorio"><div class="furniture-main"><strong>Armário de casal</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="armarioDormitorio" type="number" min="0" step="10" value="300"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="estanteBanheiro"><div class="furniture-main"><strong>Estante banheiro</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="estanteBanheiro" type="number" min="0" step="10" value="60"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="estanteServico"><div class="furniture-main"><strong>Estante área de serviço</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="estanteServico" type="number" min="0" step="10" value="200"></div></div></div>
+<div class="furniture-row"><input class="furniture-check" type="checkbox" id="armarioCozinha"><div class="furniture-main"><strong>Armário cozinha</strong><div class="mini-money"><span>R$</span><input class="furniture-price" data-for="armarioCozinha" type="number" min="0" step="10" value="500"></div></div></div>
+
+<div class="months"><label for="months">Diluir mobília em</label><input id="months" type="number" min="1" max="60" step="1" value="12"></div>
+</section>
+</div>
+
+<section class="card summary" style="margin-top:18px">
+<h2>Custo real mensal</h2>
+<div class="hint">Tudo o que compõe o custo mensal deste apartamento.</div>
+<div class="total" id="grandTotal">R$ 1.800,00</div>
+<div class="breakdown" id="breakdown"></div>
+<div class="furniture-total"><span>Valor total dos móveis selecionados</span><strong id="furniturePurchaseTotal">R$ 0,00</strong></div>
+</section>
+
+<p class="footnote">Os valores dos móveis são editáveis. Os valores dos móveis já começam com as referências definidas por vocês e continuam totalmente editáveis. A lava e seca começa em R$ 1.400.</p>
+</main>
+
+<script>
+const rent=document.getElementById('rent'),insurance=document.getElementById('insurance'),vlt=document.getElementById('vlt'),uber=document.getElementById('uber'),months=document.getElementById('months'),grandTotal=document.getElementById('grandTotal'),breakdown=document.getElementById('breakdown'),furniturePurchaseTotal=document.getElementById('furniturePurchaseTotal');
+const furnitureNames={geladeira:'Geladeira',fogao:'Fogão',cama:'Cama + colchão de casal',sofa:'Sofá 2–3 lugares',escrivaninha:'Escrivaninha',lavaSeca:'Máquina lava e seca',armarioDormitorio:'Armário de casal',estanteBanheiro:'Estante banheiro',estanteServico:'Estante área de serviço',armarioCozinha:'Armário cozinha'};
+function brl(v){return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v||0)}
+function n(el){return Math.max(0,Number(el.value)||0)}
+function calculate(){
+ const base=n(rent),insuranceValue=insurance.checked?base*.11:0,vltValue=vlt.checked?220:0,uberValue=uber.checked?700:0,furnitureMonths=Math.max(1,n(months)||12);
+ let furnitureTotal=0,details=[];
+ document.querySelectorAll('.furniture-check').forEach(check=>{
+   if(!check.checked)return;
+   const price=n(document.querySelector('.furniture-price[data-for="'+check.id+'"]'));
+   furnitureTotal+=price;details.push({name:furnitureNames[check.id],monthly:price/furnitureMonths});
+ });
+ const furnitureMonthly=furnitureTotal/furnitureMonths,total=base+insuranceValue+vltValue+uberValue+furnitureMonthly;
+ grandTotal.textContent=brl(total);furniturePurchaseTotal.textContent=brl(furnitureTotal);
+ let rows=['<div class="breakdown-row"><span>Imóvel (aluguel + condomínio + IPTU)</span><strong>'+brl(base)+'</strong></div>'];
+ if(insurance.checked)rows.push('<div class="breakdown-row"><span>Seguro fiança (11%)</span><strong>'+brl(insuranceValue)+'</strong></div>');
+ if(vlt.checked)rows.push('<div class="breakdown-row"><span>VLT</span><strong>'+brl(vltValue)+'</strong></div>');
+ if(uber.checked)rows.push('<div class="breakdown-row"><span>Uber</span><strong>'+brl(uberValue)+'</strong></div>');
+ if(details.length){
+   rows.push('<div class="breakdown-row"><span>Mobília ('+furnitureMonths+'x)</span><strong>'+brl(furnitureMonthly)+'/mês</strong></div>');
+   details.forEach(item=>rows.push('<div class="breakdown-row furniture-detail"><span>↳ '+item.name+'</span><strong>'+brl(item.monthly)+'/mês</strong></div>'));
+ }
+ if(!insurance.checked&&!vlt.checked&&!uber.checked&&!details.length)rows.push('<div class="empty">Nenhum custo adicional selecionado.</div>');
+ breakdown.innerHTML=rows.join('');
+}
+document.querySelectorAll('input').forEach(el=>{el.addEventListener('input',calculate);el.addEventListener('change',calculate)});calculate();
+</script>
+</body>
+</html>
